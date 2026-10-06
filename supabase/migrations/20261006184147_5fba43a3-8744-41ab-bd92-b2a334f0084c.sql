@@ -1,0 +1,1 @@
+CREATE POLICY "No client access - server inserts only" ON public.sop_kit_leads FOR ALL TO authenticated USING (false) WITH CHECK (false);
