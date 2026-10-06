@@ -30,9 +30,16 @@ const forYou = [
 ];
 
 const stats = [
-  { n: "100+", label: "Founders Served", body: "Trusted by 7- and 8-figure entrepreneurs across dozens of industries to eliminate operational constraints." },
-  { n: "93%", label: "12-Month Retention Rate", body: "The industry-leading benchmark proving our delegation systems create permanent, compounding founder leverage." },
-  { n: "$2.1M+", label: "Paid to Top 1% Talent", body: "Sourcing, vetting, and deploying the top 0.1% of Latin American operators (\"Right Hands\") trained on modern ops and AI." },
+  { n: "40+ Hours", label: "Pre-Trained AI & Systems Stack", body: "Every Right Hand undergoes 10 days (40+ hours) of intensive training in SOP building, n8n automations, Claude prompt engineering, and CRM architecture before ever touching your business." },
+  { n: "15–20 Hrs", label: "Reclaimed Founder Capacity / Wk", body: "Clients win back 10–15 hours/week in their first 30 days, scaling to 20+ hours/week as their Right Hand builds custom automations and takes full outcome ownership." },
+  { n: "3.6x ROI", label: "Instant Capacity Value", body: "At a $200/hr founder rate, saving 12.5 hours/week unlocks $10,750/month in recovered growth capacity — an immediate 3.6x return on your investment." },
+  { n: "93%", label: "12-Month Client Retention", body: "Sourced through a 1-in-1,000 selection process and Predictive Index (PI) behavioral matching, our operator placements stay handed off permanently." },
+];
+
+const authority = [
+  ["100+ Scaling Founders", "actively supported across 7- & 8-figure businesses."],
+  ["250+ AI-Powered Operators", "backing your Right Hand 24/7 in our private peer network."],
+  ["The Freedom 40 Guarantee:", "Get 40 hours back in your first 30 days, or month 2 is completely free."],
 ];
 
 function Index() {
@@ -102,16 +109,21 @@ function Index() {
 
       <section className="bg-background py-24">
         <div className="mx-auto max-w-6xl px-6">
-          <p className="eyebrow text-center">Proof & authority</p>
-          <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-2xl font-bold leading-tight text-foreground md:text-[32px]">Built on Battle-Tested Systems That Power Top-Tier Founders</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-lg">Pareto Talent doesn't deal in theory or generic outsourcing templates. Our frameworks have been battle-tested across hundreds of scaling businesses.</p>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
+          <p className="eyebrow text-center">Battle-tested operational leverage</p>
+          <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-2xl font-bold leading-tight text-foreground md:text-[32px]">Built on Proven Systems. Backed by Hard Numbers.</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-lg">Creating an SOP is only 10% of the battle. Here is why 7- and 8-figure founders trust Pareto Talent to execute, automate, and scale their operational systems.</p>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label} className="rounded-lg border border-ink-foreground/10 bg-ink p-7 text-ink-foreground shadow-xl">
-                <div className="font-display text-[42px] font-extrabold text-accent">{s.n}</div>
-                <div className="font-semibold">{s.label}</div>
+                <div className="font-display text-[36px] font-extrabold leading-tight text-accent">{s.n}</div>
+                <div className="mt-1 font-semibold">{s.label}</div>
                 <p className="mt-3 text-sm leading-relaxed text-ink-foreground/70">{s.body}</p>
               </div>
+            ))}
+          </div>
+          <div className="mt-12 grid gap-6 border-t border-border pt-10 md:grid-cols-3">
+            {authority.map(([b, t]) => (
+              <div key={b} className="flex gap-3"><Check className="mt-1 h-5 w-5 shrink-0 text-success" /><p className="leading-relaxed"><strong className="text-foreground">{b}</strong> {t}</p></div>
             ))}
           </div>
         </div>
