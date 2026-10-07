@@ -16,8 +16,18 @@ export const Route = createFileRoute("/thank-you")({
 });
 
 const resources = [
-  { title: "The HIRE Framework", body: "Read Kasim Aslam's guide on why traditional hiring fails and how to select top 0.1% talent.", action: "Read the Framework" },
-  { title: "The 3X Freedom Philosophy", body: "Discover how to move from freedom from limitation to freedom of purpose.", action: "Explore 3X Freedom" },
+  {
+    title: "The HIRE Framework",
+    body: "Read Kasim Aslam's guide on why traditional hiring fails and how to select top 0.1% talent.",
+    action: "Read the Framework",
+    href: "https://thehirebook.com/",
+  },
+  {
+    title: "The 3X Freedom Philosophy",
+    body: "Discover how to move from freedom from limitation to freedom of purpose.",
+    action: "Explore 3X Freedom",
+    href: "https://www.skool.com/3xf",
+  },
 ];
 
 function ThankYou() {
@@ -41,7 +51,7 @@ function ThankYou() {
             Your free copy of 'The 10-Minute Brain-Dump SOP Kit' (Notion Template + Claude AI Prompt Kit) is ready for immediate download below.
           </p>
           <a
-            href="https://docs.google.com/document/d/10-minute-sop-kit-placeholder"
+            href="https://docs.google.com/document/d/1XiZLYb0coAPo0XZJKeAzWjdQHNDbvKw8A4ZeL96vguM/edit?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-9 py-4 text-lg font-bold text-primary-foreground shadow-md transition hover:-translate-y-0.5 hover:bg-primary-hover"
@@ -57,13 +67,19 @@ function ThankYou() {
           <h3 className="text-center font-display text-xl font-bold text-foreground">While You Wait: Explore the Pareto Ecosystem</h3>
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             {resources.map((r) => (
-              <div key={r.title} className="flex flex-col rounded-lg border border-border bg-card p-6 transition hover:-translate-y-1 hover:border-primary">
+              <a
+                key={r.title}
+                href={r.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col rounded-lg border border-border bg-card p-6 transition hover:-translate-y-1 hover:border-primary"
+              >
                 <h4 className="font-display text-lg font-bold text-foreground">{r.title}</h4>
                 <p className="mt-2 flex-1 leading-relaxed">{r.body}</p>
                 <span className="mt-4 inline-flex items-center gap-1 font-semibold text-primary">
                   {r.action} <ArrowRight className="h-4 w-4" />
                 </span>
-              </div>
+              </a>
             ))}
           </div>
         </section>
