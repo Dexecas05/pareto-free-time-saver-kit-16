@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays } from "lucide-react";
 
 export const Route = createFileRoute("/book-call")({
   head: () => ({
