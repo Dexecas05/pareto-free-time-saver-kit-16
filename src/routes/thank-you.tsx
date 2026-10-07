@@ -67,13 +67,19 @@ function ThankYou() {
           <h3 className="text-center font-display text-xl font-bold text-foreground">While You Wait: Explore the Pareto Ecosystem</h3>
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             {resources.map((r) => (
-              <div key={r.title} className="flex flex-col rounded-lg border border-border bg-card p-6 transition hover:-translate-y-1 hover:border-primary">
+              <a
+                key={r.title}
+                href={r.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col rounded-lg border border-border bg-card p-6 transition hover:-translate-y-1 hover:border-primary"
+              >
                 <h4 className="font-display text-lg font-bold text-foreground">{r.title}</h4>
                 <p className="mt-2 flex-1 leading-relaxed">{r.body}</p>
                 <span className="mt-4 inline-flex items-center gap-1 font-semibold text-primary">
                   {r.action} <ArrowRight className="h-4 w-4" />
                 </span>
-              </div>
+              </a>
             ))}
           </div>
         </section>
