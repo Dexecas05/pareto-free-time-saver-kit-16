@@ -51,7 +51,7 @@ function ThankYou() {
             Your free copy of 'The 10-Minute Brain-Dump SOP Kit' (Notion Template + Claude AI Prompt Kit) is ready for immediate download below.
           </p>
           <a
-            href="https://docs.google.com/document/d/10-minute-sop-kit-placeholder"
+            href="https://docs.google.com/document/d/1XiZLYb0coAPo0XZJKeAzWjdQHNDbvKw8A4ZeL96vguM/edit?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-9 py-4 text-lg font-bold text-primary-foreground shadow-md transition hover:-translate-y-0.5 hover:bg-primary-hover"
