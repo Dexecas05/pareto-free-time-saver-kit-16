@@ -14,48 +14,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      sop_kit_leads: {
-        Row: {
-          bottleneck: string
-          created_at: string
-          delegation_approach: string
-          email: string
-          first_name: string
-          hours_lost: string
-          id: string
-          last_name: string
-          lead_tier: string
-          phone: string
-          revenue_tier: string
-        }
-        Insert: {
-          bottleneck: string
-          created_at?: string
-          delegation_approach: string
-          email: string
-          first_name: string
-          hours_lost: string
-          id?: string
-          last_name: string
-          lead_tier?: string
-          phone: string
-          revenue_tier: string
-        }
-        Update: {
-          bottleneck?: string
-          created_at?: string
-          delegation_approach?: string
-          email?: string
-          first_name?: string
-          hours_lost?: string
-          id?: string
-          last_name?: string
-          lead_tier?: string
-          phone?: string
-          revenue_tier?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
