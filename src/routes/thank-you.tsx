@@ -16,8 +16,18 @@ export const Route = createFileRoute("/thank-you")({
 });
 
 const resources = [
-  { title: "The HIRE Framework", body: "Read Kasim Aslam's guide on why traditional hiring fails and how to select top 0.1% talent.", action: "Read the Framework" },
-  { title: "The 3X Freedom Philosophy", body: "Discover how to move from freedom from limitation to freedom of purpose.", action: "Explore 3X Freedom" },
+  {
+    title: "The HIRE Framework",
+    body: "Read Kasim Aslam's guide on why traditional hiring fails and how to select top 0.1% talent.",
+    action: "Read the Framework",
+    href: "https://thehirebook.com/",
+  },
+  {
+    title: "The 3X Freedom Philosophy",
+    body: "Discover how to move from freedom from limitation to freedom of purpose.",
+    action: "Explore 3X Freedom",
+    href: "https://www.skool.com/3xf",
+  },
 ];
 
 function ThankYou() {
