@@ -11,5 +11,4 @@
 
 ## Architecture rules
 
-- Lead submissions are stored ONLY through the `submitLead` server function (src/lib/leads.functions.ts) using the server-side admin client; the `sop_kit_leads` table has no client access (deny-all RLS policy, no anon grants). Never read or write leads from browser code.
-- The qualifying form's internal tier labels (Unqualified / Qualified ICP / etc.) are computed server-side and must never be rendered to visitors.
+- Lead capture happens exclusively through the GoHighLevel survey embed on the landing page (iframe + form_embed.js script). No native lead form or local lead storage exists; do not re-add one without asking.
