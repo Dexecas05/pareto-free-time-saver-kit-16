@@ -1,14 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
-import { useState, type FormEvent, type ReactNode } from "react";
-import { Brain, Bot, Zap, Check, ArrowRight, Lock, ChevronLeft } from "lucide-react";
-import {
-  submitLead,
-  REVENUE_TIERS,
-  DELEGATION_APPROACHES,
-  HOURS_LOST,
-  BOTTLENECKS,
-} from "@/lib/leads.functions";
+import { useEffect } from "react";
+import { Brain, Bot, Zap, Check, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,295 +42,29 @@ const authority = [
   ["The Freedom 40 Guarantee:", "Get 40 hours back in your first 30 days, or month 2 is completely free."],
 ];
 
-function OptionRow({
-  name,
-  value,
-  selected,
-  onSelect,
-  children,
-}: {
-  name: string;
-  value: string;
-  selected: boolean;
-  onSelect: (value: string) => void;
-  children: ReactNode;
-}) {
-  return (
-    <label
-      className={`block cursor-pointer rounded-md border p-4 transition ${
-        selected
-          ? "border-primary bg-primary/5 ring-1 ring-primary"
-          : "border-border bg-background hover:border-primary/50"
-      }`}
-    >
-      <span className="flex items-start gap-3">
-        <input
-          type="radio"
-          name={name}
-          value={value}
-          checked={selected}
-          onChange={() => onSelect(value)}
-          className="sr-only"
-        />
-        <span
-          className={`mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${
-            selected ? "border-primary" : "border-input"
-          }`}
-        >
-          {selected && <span className="h-2 w-2 rounded-full bg-primary" />}
-        </span>
-        <span className="text-[15px] leading-relaxed text-foreground">{children}</span>
-      </span>
-    </label>
-  );
-}
-
-function QualifyingForm() {
-  const submitLeadFn = useServerFn(submitLead);
-
-  const [step, setStep] = useState<1 | 2>(1);
-  const [contact, setContact] = useState({ firstName: "", lastName: "", email: "", phone: "" });
-  const [revenueTier, setRevenueTier] = useState("");
-  const [delegationApproach, setDelegationApproach] = useState("");
-  const [hoursLost, setHoursLost] = useState("");
-  const [bottleneck, setBottleneck] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const onContactSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setStep(2);
-  };
-
-  const onQuestionsSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (status === "submitting") return;
-    setStatus("submitting");
-    setErrorMsg("");
-    try {
-      await submitLeadFn({
-        data: {
-          firstName: contact.firstName,
-          lastName: contact.lastName,
-          email: contact.email,
-          phone: contact.phone,
-          revenueTier: revenueTier as (typeof REVENUE_TIERS)[number],
-          delegationApproach: delegationApproach as (typeof DELEGATION_APPROACHES)[number],
-          hoursLost: hoursLost as (typeof HOURS_LOST)[number],
-          bottleneck: bottleneck as (typeof BOTTLENECKS)[number],
-        },
-      });
-      setStatus("idle");
-      setStep(1);
-      setContact({ firstName: "", lastName: "", email: "", phone: "" });
-      setRevenueTier("");
-      setDelegationApproach("");
-      setHoursLost("");
-      setBottleneck("");
-      setSubmitted(true);
-    } catch (err) {
-      setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-    }
-  };
-
-  const [submitted, setSubmitted] = useState(false);
-
-  if (submitted) {
-    return (
-      <div className="py-10 text-center">
-        <Check className="mx-auto h-12 w-12 text-success" />
-        <h3 className="mt-4 font-display text-2xl font-bold">You're in.</h3>
-        <p className="mt-2 text-body">Check your inbox — your SOP Kit is on its way.</p>
-      </div>
-    );
-  }
-
-  const questionsComplete = revenueTier && delegationApproach && hoursLost && bottleneck;
+function GhlSurveyEmbed() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://link.msgsndr.com/js/form_embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <div className="flex items-center justify-between text-sm font-semibold">
-          <span className="text-foreground">Step {step} of 2</span>
-          <span className="text-muted-foreground">{step === 1 ? "Your details" : "Qualifying questions"}</span>
-        </div>
-        <div className="mt-2 h-1.5 rounded-full bg-muted">
-          <div
-            className="h-full rounded-full bg-primary transition-all duration-300"
-            style={{ width: step === 1 ? "50%" : "100%" }}
-          />
-        </div>
-      </div>
-
-      {step === 1 ? (
-        <form onSubmit={onContactSubmit} className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="block">
-              <span className="mb-1.5 block text-[15px] font-medium">First Name</span>
-              <input
-                required
-                type="text"
-                name="firstName"
-                maxLength={80}
-                autoComplete="given-name"
-                value={contact.firstName}
-                onChange={(e) => setContact({ ...contact, firstName: e.target.value })}
-                className="field"
-              />
-            </label>
-            <label className="block">
-              <span className="mb-1.5 block text-[15px] font-medium">Last Name</span>
-              <input
-                required
-                type="text"
-                name="lastName"
-                maxLength={80}
-                autoComplete="family-name"
-                value={contact.lastName}
-                onChange={(e) => setContact({ ...contact, lastName: e.target.value })}
-                className="field"
-              />
-            </label>
-            <label className="block">
-              <span className="mb-1.5 block text-[15px] font-medium">Business Email</span>
-              <input
-                required
-                type="email"
-                name="email"
-                maxLength={255}
-                autoComplete="email"
-                value={contact.email}
-                onChange={(e) => setContact({ ...contact, email: e.target.value })}
-                className="field"
-              />
-            </label>
-            <label className="block">
-              <span className="mb-1.5 block text-[15px] font-medium">Phone Number</span>
-              <input
-                required
-                type="tel"
-                name="phone"
-                maxLength={30}
-                autoComplete="tel"
-                value={contact.phone}
-                onChange={(e) => setContact({ ...contact, phone: e.target.value })}
-                className="field"
-              />
-            </label>
-          </div>
-          <button type="submit" className="btn-cta w-full gap-2">
-            Continue to Step 2 <ArrowRight className="h-5 w-5" />
-          </button>
-          <p className="flex items-center justify-center gap-1.5 text-center text-sm text-muted-foreground">
-            <Lock className="h-3.5 w-3.5 text-success" /> 100% Free. No credit card required.
-          </p>
-        </form>
-      ) : (
-        <form onSubmit={onQuestionsSubmit} className="space-y-6">
-          <div>
-            <p className="text-[15px] font-semibold text-foreground">
-              1. What is your business's current annual revenue tier?
-            </p>
-            <div className="mt-3 space-y-2.5">
-              {REVENUE_TIERS.map((tier) => (
-                <OptionRow
-                  key={tier}
-                  name="revenueTier"
-                  value={tier}
-                  selected={revenueTier === tier}
-                  onSelect={setRevenueTier}
-                >
-                  {tier}
-                </OptionRow>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-[15px] font-semibold text-foreground">
-              2. When delegating core operations, which statement best reflects your approach?
-            </p>
-            <div className="mt-3 space-y-2.5">
-              {DELEGATION_APPROACHES.map((approach) => (
-                <OptionRow
-                  key={approach}
-                  name="delegationApproach"
-                  value={approach}
-                  selected={delegationApproach === approach}
-                  onSelect={setDelegationApproach}
-                >
-                  "{approach}"
-                </OptionRow>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-[15px] font-semibold text-foreground">
-              3. How many hours per week are you personally losing to routine administration, firefighting, and tasks running strictly out of your head?
-            </p>
-            <div className="mt-3 space-y-2.5">
-              {HOURS_LOST.map((option) => (
-                <OptionRow
-                  key={option}
-                  name="hoursLost"
-                  value={option}
-                  selected={hoursLost === option}
-                  onSelect={setHoursLost}
-                >
-                  {option}
-                </OptionRow>
-              ))}
-            </div>
-          </div>
-
-          <label className="block">
-            <span className="mb-1.5 block text-[15px] font-semibold">4. Current Operational Bottleneck</span>
-            <select
-              required
-              className="field"
-              value={bottleneck}
-              onChange={(e) => setBottleneck(e.target.value)}
-            >
-              <option value="" disabled>
-                Select…
-              </option>
-              {BOTTLENECKS.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          {status === "error" && (
-            <p className="rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-              {errorMsg}
-            </p>
-          )}
-
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={() => setStep(1)}
-              className="inline-flex items-center gap-1.5 rounded-md border border-border px-4 py-3 text-sm font-semibold text-muted-foreground transition hover:border-primary hover:text-foreground"
-            >
-              <ChevronLeft className="h-4 w-4" /> Back
-            </button>
-            <button
-              type="submit"
-              disabled={status === "submitting" || !questionsComplete}
-              className="btn-cta flex-1 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {status === "submitting" ? "Sending…" : "Get the Free SOP Kit Now"}
-            </button>
-          </div>
-          <p className="flex items-center justify-center gap-1.5 text-center text-sm text-muted-foreground">
-            <Lock className="h-3.5 w-3.5 text-success" /> 100% Free. No credit card required. Instant digital delivery.
-          </p>
-        </form>
-      )}
+    <div className="w-full overflow-hidden">
+      <iframe
+        src="https://api.leadconnectorhq.com/widget/survey/Q0ykEd171U3aMZ2LJAvb"
+        style={{ border: "none", width: "100%" }}
+        scrolling="no"
+        id="Q0ykEd171U3aMZ2LJAvb"
+        title="survey"
+        data-cookie-consent="true"
+        data-cookie-consent-provider="auto"
+        className="block min-h-[600px] md:min-h-[700px]"
+      />
     </div>
   );
 }
@@ -432,10 +158,10 @@ function Index() {
           <div>
             <p className="eyebrow !text-accent">Instant access</p>
             <h2 className="mt-3 font-display text-3xl font-bold leading-tight md:text-[40px]">Reclaim 15–20 Hours of Your Week Starting Today.</h2>
-            <p className="mt-5 text-lg text-ink-foreground/75">Two quick steps: enter your details, answer 4 short questions, and get instant access to <b className="text-ink-foreground">The 10-Minute Brain-Dump SOP Kit</b> (Notion Template + Master AI Prompt Kit).</p>
+            <p className="mt-5 text-lg text-ink-foreground/75">Answer the short survey below and get instant access to <b className="text-ink-foreground">The 10-Minute Brain-Dump SOP Kit</b> (Notion Template + Master AI Prompt Kit).</p>
           </div>
-          <div className="rounded-lg bg-card p-8 text-card-foreground shadow-2xl">
-            <QualifyingForm />
+          <div className="rounded-lg bg-card p-6 shadow-2xl sm:p-8">
+            <GhlSurveyEmbed />
           </div>
         </div>
       </section>
