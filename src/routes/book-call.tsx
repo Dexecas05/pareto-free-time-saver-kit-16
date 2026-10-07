@@ -21,6 +21,18 @@ const cards = [
 ];
 
 function BookCall() {
+  useEffect(() => {
+    // Load the GoHighLevel embed script once so it can auto-size the calendar iframe.
+    const script = document.createElement("script");
+    script.src = "https://link.msgsndr.com/js/form_embed.js";
+    script.type = "text/javascript";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background font-sans text-body">
       <header className="border-b border-border bg-background">
@@ -46,15 +58,13 @@ function BookCall() {
 
       <section className="px-6 pb-20">
         <div className="mx-auto max-w-[900px] overflow-hidden rounded-xl border border-border bg-card shadow-[0_10px_30px_color-mix(in_oklch,var(--foreground)_5%,transparent)]">
-          {/* PASTE GHL CALENDAR IFRAME EMBED CODE HERE — replace the placeholder div below with the <iframe> (keep w-full, min-h-[700px]) */}
-          <div className="flex min-h-[700px] w-full flex-col items-center justify-center gap-4 bg-muted">
-            <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-              <span className="absolute inset-0 animate-ping rounded-full bg-primary/10" />
-              <CalendarDays className="h-7 w-7 text-primary" />
-            </div>
-            <p className="font-display font-bold text-foreground">Loading Calendar...</p>
-            <p className="text-sm text-muted-foreground">(GHL Embed Placeholder)</p>
-          </div>
+          <iframe
+            src="https://api.leadconnectorhq.com/widget/booking/g2uotW1ZTQr53x4lWv2S"
+            allow="payment"
+            title="Schedule Your 15-Minute Freedom Audit"
+            className="w-full min-h-[700px] border-0"
+          />
+
         </div>
       </section>
 
